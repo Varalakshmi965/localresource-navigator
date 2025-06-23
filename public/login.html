@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In - WayToCare</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100 text-gray-900 font-sans"
+  style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsIkWr1VzUX84MxSP8w8uOtffMr-AUpL3Keg&s'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  
+  <div class="bg-white rounded-lg w-full max-w-md p-6 shadow-2xl transform transition duration-500 hover:scale-[1.01]">
+    <h2 class="text-xl font-bold text-center mb-1">Welcome Back</h2>
+    <p class="text-sm text-center mb-4">Sign in to your account</p>
+
+    <!-- Error Message -->
+    <p id="login-error-msg" class="text-sm text-red-500 mb-2 text-center font-semibold"></p>
+
+    <input id="login-email" type="email" placeholder="Email Address" 
+      class="w-full mb-3 border p-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-200" />
+
+    <input id="login-password" type="password" placeholder="Password" 
+      class="w-full mb-3 border p-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-200" />
+
+    <a href="javascript:void(0)" onclick="handleForgotPassword()" class="block text-right text-sm text-blue-600 hover:underline mb-3 transition">Forgot Password?</a>
+
+    <button id="login-btn" onclick="handleLogin()" 
+      class="bg-blue-600 hover:bg-blue-700 transition text-white w-full p-2 rounded font-semibold shadow">
+      Sign In
+    </button>
+
+    <div class="text-center mt-4">
+      <p class="text-sm">Don't have an account? 
+        <a href="signup.html" class="text-blue-600 underline hover:text-blue-800 transition">Sign Up</a>
+      </p>
+      <p class="text-sm mt-2">Or continue with</p>
+      <button onclick="handleGoogleSignIn()" class="mt-2 border w-full p-2 rounded bg-gray-100 hover:bg-gray-200 transition shadow-sm">
+        Continue with Google
+      </button>
+    </div>
+  </div>
+
+  <script>
+    async function handleLogin() {
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+      const errorMsg = document.getElementById('login-error-msg');
+      const button = document.getElementById('login-btn');
+
+      errorMsg.textContent = '';
+
+      if (!email || !password) {
+        errorMsg.textContent = '⚠ Please fill in both fields.';
+        return;
+      }
+
+      button.disabled = true;
+      button.innerText = 'Signing In...';
+
+      try {
+        const res = await fetch('http://localhost:2000/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const text = await res.text();
+
+        if (res.ok) {
+          alert('✅ ' + text);
+          // window.location.href = 'dashboard.html'; // Optional redirect
+        } else {
+          errorMsg.textContent = '❌ ' + text;
+        }
+      } catch (err) {
+        errorMsg.textContent = '❌ Error: ' + err.message;
+      } finally {
+        button.disabled = false;
+        button.innerText = 'Sign In';
+      }
+    }
+
+    function handleForgotPassword() {
+      alert('🔐 Forgot password clicked. You can redirect to a reset page here.');
+      // window.location.href = 'reset-password.html';
+    }
+
+    function handleGoogleSignIn() {
+      alert('🟢 Google Sign-In clicked. Integrate Firebase or OAuth here.');
+    }
+  </script>
+</body>
+</html>

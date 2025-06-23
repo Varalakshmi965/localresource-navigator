@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Local Resource Navigator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+<body class="bg-cover bg-center bg-no-repeat text-gray-900 font-sans"
+      style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsIkWr1VzUX84MxSP8w8uOtffMr-AUpL3Keg&s');">
+      <!-- Header -->
+    <header class="flex items-center justify-between p-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow">
+      <div class="flex items-center space-x-2">
+        <h1 class="text-xl font-bold">WayToCare</h1>
+      </div>
+      <div class="flex space-x-4 items-center">
+        <select id="language-select" class="border px-2 py-1 rounded text-sm text-black">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="te">తెలుగు</option>
+        </select>
+        <a href="#emergency-help" class="bg-red-500 text-white px-4 py-1 rounded text-sm">Emergency</a>
+        <a href="login.html" class="bg-white text-indigo-600 px-4 py-1 rounded text-sm border">Sign In</a>
+        <a href="signup.html" class="bg-white text-indigo-600 px-4 py-1 rounded text-sm">Sign Up</a>
+
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="text-center py-6">
+      <h2 id="hero-title" class="text-3xl font-bold mb-2">Find Help When You Need It</h2>
+      <p id="hero-subtitle" class="text-gray-700 mb-4">Connecting you to essential services and support in your community</p>
+      <div class="space-x-2">
+      <a href="login.html" class="inline-block bg-blue-600 text-white px-6 py-2 rounded">Get Started</a>
+        <button class="bg-white text-blue-600 border px-6 py-2 rounded">Learn More</button>
+      </div>
+    </section>
+
+    <!-- Stats -->
+<section class="flex justify-center gap-4 mb-0 px-4 flex-wrap pt-10 pb-8 text-white min-h-[400px]"
+  style="background-image: url('https://www.shutterstock.com/shutterstock/photos/725506924/display_1500/stock-photo-close-up-top-view-of-young-business-people-putting-their-hands-together-stack-of-hands-unity-and-725506924.jpg'); background-size: cover; background-position: center;">
+
+  
+  <div class="bg-black bg-opacity-60 p-6 rounded shadow text-center w-60">
+    <div class="text-blue-300 text-4xl mb-2">📍</div>
+    <h3 class="text-2xl font-bold">500+</h3>
+    <p class="text-base font-medium">Verified Resources</p>
+  </div>
+
+  <div class="bg-black bg-opacity-60 p-6 rounded shadow text-center w-60">
+    <div class="text-green-300 text-4xl mb-2">👥</div>
+    <h3 class="text-2xl font-bold">12,547</h3>
+    <p class="text-base font-medium">People Helped</p>
+  </div>
+
+  <div class="bg-black bg-opacity-60 p-6 rounded shadow text-center w-60">
+    <div class="text-purple-300 text-4xl mb-2">❤</div>
+    <h3 class="text-2xl font-bold">24/7</h3>
+    <p class="text-base font-medium">Support Available</p>
+  </div>
+
+</section>
+
+
+
+
+    <!-- Emergency Help -->
+<section id="emergency-help" class="bg-red-50 px-6 pt-0 pb-6 rounded">
+<h3 class="text-3xl font-bold text-center text-red-600 mt-3 mb-6">🚨 Emergency Help</h3>
+        <div class="px-4 md:px-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="bg-red-500 text-white p-6 rounded-lg text-center text-lg font-semibold shadow-lg">🚓<br/>100<br/><small class="text-sm font-normal">Police</small></div>
+        <div class="bg-green-500 text-white p-6 rounded-lg text-center text-lg font-semibold shadow-lg">🚑<br/>108<br/><small class="text-sm font-normal">Ambulance</small></div>
+        <div class="bg-purple-500 text-white p-6 rounded-lg text-center text-lg font-semibold shadow-lg">📞<br/>1091<br/><small class="text-sm font-normal">Women Helpline</small></div>
+        <div class="bg-blue-500 text-white p-6 rounded-lg text-center text-lg font-semibold shadow-lg">🧠<br/>1056<br/><small class="text-sm font-normal">Mental Health</small></div>
+      </div>
+     <p class="text-center text-base mt-6 text-gray-700 italic">📢 Note: These are emergency helpline numbers. Use them responsibly and only when needed.</p>
+    </section>
+   <!-- Available Resources Heading -->
+     <h2 class="text-3xl font-bold text-center my-10">Available Resources</h2>
+
+    <!-- Resource List -->
+<section class="px-4 max-w-6xl mx-auto py-10">
+     <div class="mb-4">
+  <!-- Search Input and Button -->
+  <div class="flex flex-col md:flex-row gap-2 mb-3">
+    <input id="search-input" type="text" class="border px-3 py-2 w-full rounded" placeholder="Search for resources, services, or locations...">
+    <button onclick="searchResources()" class="bg-blue-600 text-white px-4 py-2 rounded">Search</button>
+  </div>
+
+  <!-- Filter Buttons -->
+  <div class="flex gap-3 flex-wrap">
+    <button class="bg-gray-300 px-3 py-1 rounded">Filters</button>
+    <button class="bg-white border px-3 py-1 rounded">Clear</button>
+    <button class="bg-blue-500 text-white px-3 py-1 rounded">Near Me</button>
+  </div>
+</div>
+
+      
+      
+  <!-- Sample Resource Cards -->
+<div id="resource-list" class="grid md:grid-cols-2 gap-4">
+  <!-- Resource Card 1 -->
+  <div class="bg-white p-6 rounded-lg shadow flex flex-col justify-between min-h-[300px]">
+    <h2 class="text-lg font-bold mb-1">City Food Bank</h2>
+    <div class="text-green-600 text-sm font-semibold mb-2">✔ Verified</div>
+    <p>Free meals and groceries</p>
+    <p class="text-red-500">📍 Main Street</p>
+    <p class="text-red-500">📞 123-456-7890</p>
+    <p class="text-gray-700 text-sm mt-1">🕒 Mon–Fri: 9 AM – 5 PM</p>
+    <div class="my-2 text-yellow-500">Rating: ★★★★★</div>
+    <button onclick="openModal('City Food Bank', 'Provides free meals and groceries for families in need. Open Mon-Fri, 9 AM to 5 PM.')" class="mt-4 bg-green-600 text-white px-4 py-2 rounded self-center">View Details</button>
+  </div>
+
+  <!-- Resource Card 2 -->
+  <div class="bg-white p-6 rounded-lg shadow flex flex-col justify-between min-h-[300px]">
+    <h2 class="text-lg font-bold mb-1">Free Health Clinic</h2>
+    <div class="text-green-600 text-sm font-semibold mb-2">✔ Verified</div>
+    <p>Checkups, prescriptions, and emergency care</p>
+    <p class="text-red-500">📍 Wellness Blvd</p>
+    <p class="text-red-500">📞 555-123-4567</p>
+    <p class="text-gray-700 text-sm mt-1">🕒 Mon–Sat: 8 AM – 6 PM</p>
+    <div class="my-2 text-yellow-500">Rating: ★★★★☆</div>
+    <button onclick="openModal('Free Health Clinic', 'Offers general checkups, vaccinations, and emergency aid. Walk-ins welcome.')" class="mt-4 bg-green-600 text-white px-4 py-2 rounded self-center">View Details</button>
+  </div>
+</div>
+
+<!-- Now add the centered View More Resources button outside the grid -->
+<div class="w-full flex justify-center mt-8">
+  <a href="resources.html">
+    <button class="bg-white px-6 py-2 rounded border text-blue-600 font-semibold shadow-md hover:bg-gray-100">
+      View More Resources
+    </button>
+  </a>
+</div>
+
+
+
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-10 mt-10 text-center rounded">
+      <h3 class="text-2xl font-bold mb-2">Ready to Get Started?</h3>
+      <p class="mb-4">Join thousands of people finding help in their communities</p>
+<a href="signup.html" class="inline-block bg-white text-blue-600 px-4 py-2 rounded font-semibold">Sign Up Today</a>
+    </section>
+    
+
+    <!-- Footer -->
+    <footer class="bg-white mt-10 p-6 text-sm text-gray-700">
+      <div class="grid md:grid-cols-4 gap-4">
+        <div>
+          <h4 class="font-semibold">Local Resource Navigator</h4>
+          <p>Connecting communities with essential resources and support services.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold">Resources</h4>
+          <ul><li>Food Banks</li><li>Shelters</li><li>Health Clinics</li><li>Legal Aid</li></ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Support</h4>
+          <ul><li>Help Center</li><li>Contact Us</li><li>Report Issue</li><li>Privacy Policy</li></ul>
+        </div>
+        <div>
+          <h4 class="font-semibold">Emergency</h4>
+          <button class="border px-4 py-1 rounded">📞 Emergency Contacts</button>
+        </div>
+      </div>
+      <div class="mt-4 text-center">© 2024 Local Resource Navigator. All rights reserved.</div>
+    </footer>
+    
+
+
+<!-- Triggered via buttons in header -->
+
+    <script src="script.js"></script>
+  </body>
+</html>

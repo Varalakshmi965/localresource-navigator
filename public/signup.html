@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - WayToCare</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script>
+    async function handleSignup() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const role = document.getElementById('role').value;
+      const errorMsg = document.getElementById('error-msg');
+      const btn = document.getElementById('signup-btn');
+
+      errorMsg.textContent = '';
+
+      if (!name || !email || !password || !confirmPassword || !role) {
+        errorMsg.textContent = '⚠ All fields are required.';
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        errorMsg.textContent = '❌ Passwords do not match.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = 'Creating...';
+
+      try {
+        const response = await fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, password, role })
+        });
+
+        const text = await response.text();
+
+        if (response.ok) {
+          alert('✅ ' + text);
+          // Optionally redirect to login
+          // window.location.href = 'login.html';
+        } else {
+          errorMsg.textContent = '❌ ' + text;
+        }
+      } catch (err) {
+        errorMsg.textContent = '❌ ' + err.message;
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Create Account';
+      }
+    }
+
+    function handleGoogleSignup() {
+      alert('🟢 Google sign-up clicked. Integrate Firebase or OAuth here.');
+    }
+  </script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100 text-gray-900 font-sans"
+  style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsIkWr1VzUX84MxSP8w8uOtffMr-AUpL3Keg&s'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+  <div class="bg-white rounded-lg w-full max-w-md p-6 shadow-lg transform transition duration-500 hover:scale-[1.01]">
+    <h2 class="text-xl font-bold text-center mb-1">Create Account</h2>
+    <p class="text-sm text-center mb-4">Join our community of helpers and seekers</p>
+
+    <p id="error-msg" class="text-red-500 text-center text-sm font-semibold mb-2"></p>
+
+    <input id="name" type="text" placeholder="Full Name"
+      class="w-full mb-3 border p-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none transition" />
+
+    <input id="email" type="email" placeholder="Email Address"
+      class="w-full mb-3 border p-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none transition" />
+
+    <input id="password" type="password" placeholder="Password"
+      class="w-full mb-3 border p-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none transition" />
+
+    <input id="confirmPassword" type="password" placeholder="Confirm Password"
+      class="w-full mb-3 border p-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none transition" />
+
+    <select id="role" class="w-full mb-3 border p-2 rounded text-gray-600 focus:ring-2 focus:ring-blue-400 focus:outline-none transition">
+      <option disabled selected value="">Select your role</option>
+      <option>Helper</option>
+      <option>Seeker</option>
+    </select>
+
+    <button id="signup-btn" onclick="handleSignup()" class="bg-blue-600 hover:bg-blue-700 text-white w-full p-2 rounded font-semibold transition shadow">
+      Create Account
+    </button>
+
+    <div class="text-center mt-4">
+      <p class="text-sm">Already have an account?
+        <a href="login.html" class="text-blue-

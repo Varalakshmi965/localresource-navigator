@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Available Resources</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+      color: gray;
+    }
+
+    .button {
+      display: block;
+      margin: 0 auto;
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .resources {
+      display: none;
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .verified {
+      font-size: 13px;
+      color: green;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .verified::before {
+      content: "✔";
+      margin-right: 5px;
+    }
+
+    .card p {
+      margin: 4px 0;
+    }
+
+    .location, .phone {
+      color: #e74c3c;
+    }
+
+    .timing {
+      color: #2c3e50;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .rating {
+      margin: 8px 0;
+    }
+
+    .stars {
+      color: gold;
+      font-size: 16px;
+    }
+
+    .details-btn {
+      margin-top: auto;
+      padding: 8px 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+
+    .footer-button {
+      text-align: center;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .footer-button a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .close {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: black;
+    }
+  </style>
+</head>
+<body class="text-gray-900 font-sans"
+  style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsIkWr1VzUX84MxSP8w8uOtffMr-AUpL3Keg&s'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+<div class="container">
+  <h1>Available Resources</h1>
+  <p class="subtitle">Trusted services recommended by our community</p>
+  <div style="text-align:center; margin-bottom: 20px;">
+  <input type="text" id="search-box" placeholder="Search resources..." 
+         style="padding: 10px; width: 80%; max-width: 400px; border: 1px solid #ccc; border-radius: 6px;">
+</div>
+
+
+
+  <div class="resources" id="resourcesSection">
+    <!-- Card Template -->
+    <div class="card">
+      <h2>City Food Bank</h2>
+      <div class="verified">Verified</div>
+      <p>Free meals and groceries</p>
+      <p class="location">📍 Main Street</p>
+      <p class="phone">📞 123-456-7890</p>
+      <p class="timing">🕒 Mon–Fri: 9 AM – 5 PM</p>
+      <div class="rating">Rating: <span class="stars">★★★★★</span></div>
+      <button class="details-btn" onclick="openModal('City Food Bank', 'Provides free meals and groceries for families in need. Open Mon-Fri, 9 AM to 5 PM.')">View Details</button>
+    </div>
+
+    <div class="card">
+      <h2>Free Health Clinic</h2>
+      <div class="verified">Verified</div>
+      <p>Checkups, prescriptions, and emergency care</p>
+      <p class="location">📍 Wellness Blvd</p>
+      <p class="phone">📞 555-123-4567</p>
+      <p class="timing">🕒 Mon–Sat: 8 AM – 6 PM</p>
+      <div class="rating">Rating: <span class="stars">★★★★☆</span></div>
+      <button class="details-btn" onclick="openModal('Free Health Clinic', 'Offers general checkups, vaccinations, and emergency aid. Walk-ins welcome.')">View Details</button>
+    </div>
+
+    <div class="card">
+      <h2>Women's Safety Center</h2>
+      <div class="verified">Verified</div>
+      <p>Support, counseling, and protection for women</p>
+      <p class="location">📍 Safehouse Road</p>
+      <p class="phone">📞 1091</p>
+      <p class="timing">🕒 24/7 Available</p>
+      <div class="rating">Rating: <span class="stars">★★★★★</span></div>
+      <button class="details-btn" onclick="openModal('Women\'s Safety Center', 'Provides legal aid, safety shelters, and psychological counseling for women in distress.')">View Details</button>
+    </div>
+
+    <div class="card">
+      <h2>Shelter Hope</h2>
+      <div class="verified">Verified</div>
+      <p>Temporary housing for families</p>
+      <p class="location">📍 Hope Ave</p>
+      <p class="phone">📞 987-654-3210</p>
+      <p class="timing">🕒 Mon–Sun: 8 AM – 8 PM</p>
+      <div class="rating">Rating: <span class="stars">★★★★☆</span></div>
+      <button class="details-btn" onclick="openModal('Shelter Hope', 'Temporary safe housing, food, and basic facilities for homeless or displaced families.')">View Details</button>
+    </div>
+
+    <div class="card">
+      <h2>Legal Aid Society</h2>
+      <div class="verified">Verified</div>
+      <p>Free legal consultation and support</p>
+      <p class="location">📍 Justice Lane</p>
+      <p class="phone">📞 222-333-4444</p>
+      <p class="timing">🕒 Mon–Fri: 10 AM – 4 PM</p>
+      <div class="rating">Rating: <span class="stars">★★★☆☆</span></div>
+      <button class="details-btn" onclick="openModal('Legal Aid Society', 'Helps with legal documentation, representation, and free consultations.')">View Details</button>
+    </div>
+
+    <div class="card">
+      <h2>Youth Counseling Hub</h2>
+      <div class="verified">Verified</div>
+      <p>Mental health services for young individuals</p>
+      <p class="location">📍 Growth Street</p>
+      <p class="phone">📞 1056</p>
+      <p class="timing">🕒 Mon–Sat: 9 AM – 6 PM</p>
+      <div class="rating">Rating: <span class="stars">★★★★★</span></div>
+      <button class="details-btn" onclick="openModal('Youth Counseling Hub', 'Focuses on mental wellness for teens and youth through therapy sessions.')">View Details</button>
+    </div>
+
+    <div class="card">
+  <h2>Community Legal Aid</h2>
+  <div class="verified">Verified</div>
+  <p>Free legal consultations and documentation support</p>
+  <p class="location">📍 Justice Avenue</p>
+  <p class="phone">📞 800-222-9999</p>
+  <p class="timing">🕒 Mon–Fri: 10 AM – 4 PM</p>
+  <div class="rating">Rating: <span class="stars">★★★★☆</span></div>
+  <button class="details-btn" onclick="openModal('Community Legal Aid', 'Provides free legal help for civil issues including housing, domestic matters, and employment.')">View Details</button>
+</div>
+
+<div class="card">
+  <h2>Night Shelter Home</h2>
+  <div class="verified">Verified</div>
+  <p>Safe overnight shelter and meals</p>
+  <p class="location">📍 Peace Street</p>
+  <p class="phone">📞 999-888-7777</p>
+  <p class="timing">🕒 Daily: 6 PM – 8 AM</p>
+  <div class="rating">Rating: <span class="stars">★★★★★</span></div>
+  <button class="details-btn" onclick="openModal('Night Shelter Home', 'Offers a safe place to sleep and warm meals for individuals without housing. Open every night.')">View Details</button>
+</div>
+
+
+  </div>
+
+  <div class="footer-button" id="footerLink">
+    <a href="#">View More Resources</a>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <p id="modalContent"></p>
+  </div>
+</div>
+
+<script>
+
+   
+
+
+  function showResources() {
+    document.getElementById('resourcesSection').style.display = 'grid';
+    document.getElementById('footerLink').style.display = 'block';
+    document.querySelector('.button').style.display = 'none';
+  }
+
+  function openModal(title, content) {
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalContent').innerText = content;
+    document.getElementById('modal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
+
+  // Close modal if clicked outside content
+  window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  }
+  document.getElementById("search-box").addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+      const content = card.textContent.toLowerCase();
+      card.style.display = content.includes(query) ? "block" : "none";
+    });
+  });
+</script>
+
+</body>
+</html>

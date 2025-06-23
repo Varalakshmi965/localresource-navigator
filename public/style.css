@@ -1,0 +1,8 @@
+#auth-modal input,
+#auth-modal select,
+#auth-modal button {
+  transition: all 0.2s ease-in-out;
+}
+#auth-modal button:hover {
+  opacity: 0.9;
+}
