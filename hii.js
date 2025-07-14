@@ -1,25 +1,23 @@
 const express = require('express');
 const path = require('path');
-const admin = require('./firebase'); // Make sure this exports initialized admin
-const app = express();
+const admin = require('./firebase'); // Initialized Firebase admin
+const bcrypt = require('bcrypt');
 
+const app = express();
 const db = admin.firestore();
 
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Route: Home Test
-
+// Routes: Serve Pages
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 app.get("/login", (req, res) => res.sendFile(path.join(__dirname, "public", "login.html")));
 app.get("/signup", (req, res) => res.sendFile(path.join(__dirname, "public", "signup.html")));
-// Route: Serve Signup Page
-app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'signup.html'));
-});
 
-// Route: Handle Signup POST
+// -----------------------------
+// 🔐 Signup Route
+// -----------------------------
 app.post('/signup', async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -28,7 +26,7 @@ app.post('/signup', async (req, res) => {
       return res.status(400).send('❌ Missing fields');
     }
 
-    // Optional: Check if user already exists
+    // Check if email is already used
     const existingUser = await db.collection('users')
       .where('email', '==', email)
       .limit(1)
@@ -38,22 +36,27 @@ app.post('/signup', async (req, res) => {
       return res.status(400).send('⚠ Email already registered.');
     }
 
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 salt rounds
+
     await db.collection('users').add({
       name,
       email,
-      password,
+      password: hashedPassword,
       role,
       createdAt: admin.firestore.FieldValue.serverTimestamp()
     });
 
-    res.status(200).send('✅ Signup successful');
+    return res.status(200).send('✅ Signup successful');
   } catch (err) {
     console.error('❌ Signup Error:', err);
-    res.status(500).send('❌ Signup failed');
+    return res.status(500).send('❌ Signup failed');
   }
 });
 
-// Route: Handle Login POST
+// -----------------------------
+// 🔐 Login Route
+// -----------------------------
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -62,8 +65,10 @@ app.post('/login', async (req, res) => {
   }
 
   try {
-    const usersRef = db.collection('users');
-    const snapshot = await usersRef.where('email', '==', email).limit(1).get();
+    const snapshot = await db.collection('users')
+      .where('email', '==', email)
+      .limit(1)
+      .get();
 
     if (snapshot.empty) {
       return res.status(404).send('❌ User not found.');
@@ -72,18 +77,22 @@ app.post('/login', async (req, res) => {
     const userDoc = snapshot.docs[0];
     const userData = userDoc.data();
 
-    if (userData.password !== password) {
+    // Compare hashed password
+    const match = await bcrypt.compare(password, userData.password);
+    if (!match) {
       return res.status(401).send('❌ Incorrect password.');
     }
 
-    return res.send('✅ Login successful!');
-  } catch (error) {
-    console.error('❌ Login error:', error);
+    return res.status(200).send('✅ Login successful!');
+  } catch (err) {
+    console.error('❌ Login Error:', err);
     return res.status(500).send('❌ Server error during login.');
   }
 });
 
-// Start Server
+// -----------------------------
+// ✅ Start Server
+// -----------------------------
 const PORT = 2000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
