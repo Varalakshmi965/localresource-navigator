@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up - WayToCare</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
   <script>
     async function handleSignup() {
       const name = document.getElementById('name').value.trim();
@@ -17,6 +18,7 @@
 
       errorMsg.textContent = '';
 
+      // Validation
       if (!name || !email || !password || !confirmPassword || !role) {
         errorMsg.textContent = '⚠ All fields are required.';
         return;
@@ -43,7 +45,7 @@
 
         if (response.ok) {
           alert('✅ ' + text);
-          // Optionally redirect to login
+          // Optional redirect to login:
           // window.location.href = 'login.html';
         } else {
           errorMsg.textContent = '❌ ' + text;
@@ -88,10 +90,16 @@
       <option>Seeker</option>
     </select>
 
-    <button id="signup-btn" onclick="handleSignup()" class="bg-blue-600 hover:bg-blue-700 text-white w-full p-2 rounded font-semibold transition shadow">
+    <button id="signup-btn" onclick="handleSignup()" 
+      class="bg-blue-600 hover:bg-blue-700 text-white w-full p-2 rounded font-semibold transition shadow">
       Create Account
     </button>
 
     <div class="text-center mt-4">
       <p class="text-sm">Already have an account?
-        <a href="login.html" class="text-blue-
+        <a href="login.html" class="text-blue-600 hover:underline font-medium">Login</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
