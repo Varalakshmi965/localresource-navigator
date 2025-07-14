@@ -16,25 +16,32 @@
     <!-- Error Message -->
     <p id="login-error-msg" class="text-sm text-red-500 mb-2 text-center font-semibold"></p>
 
+    <!-- Email Input -->
     <input id="login-email" type="email" placeholder="Email Address" 
       class="w-full mb-3 border p-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-200" />
 
+    <!-- Password Input -->
     <input id="login-password" type="password" placeholder="Password" 
       class="w-full mb-3 border p-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-200" />
 
-    <a href="javascript:void(0)" onclick="handleForgotPassword()" class="block text-right text-sm text-blue-600 hover:underline mb-3 transition">Forgot Password?</a>
+    <!-- Forgot Password -->
+    <a href="javascript:void(0)" onclick="handleForgotPassword()" 
+       class="block text-right text-sm text-blue-600 hover:underline mb-3 transition">Forgot Password?</a>
 
+    <!-- Sign In Button -->
     <button id="login-btn" onclick="handleLogin()" 
       class="bg-blue-600 hover:bg-blue-700 transition text-white w-full p-2 rounded font-semibold shadow">
       Sign In
     </button>
 
+    <!-- Signup and Google -->
     <div class="text-center mt-4">
       <p class="text-sm">Don't have an account? 
         <a href="signup.html" class="text-blue-600 underline hover:text-blue-800 transition">Sign Up</a>
       </p>
       <p class="text-sm mt-2">Or continue with</p>
-      <button onclick="handleGoogleSignIn()" class="mt-2 border w-full p-2 rounded bg-gray-100 hover:bg-gray-200 transition shadow-sm">
+      <button onclick="handleGoogleSignIn()" 
+        class="mt-2 border w-full p-2 rounded bg-gray-100 hover:bg-gray-200 transition shadow-sm">
         Continue with Google
       </button>
     </div>
@@ -68,7 +75,8 @@
 
         if (res.ok) {
           alert('✅ ' + text);
-          // window.location.href = 'dashboard.html'; // Optional redirect
+          // Optional: redirect after successful login
+          // window.location.href = 'index.html';
         } else {
           errorMsg.textContent = '❌ ' + text;
         }
@@ -82,7 +90,6 @@
 
     function handleForgotPassword() {
       alert('🔐 Forgot password clicked. You can redirect to a reset page here.');
-      // window.location.href = 'reset-password.html';
     }
 
     function handleGoogleSignIn() {
