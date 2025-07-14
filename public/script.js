@@ -1,9 +1,9 @@
-// --- Modal Toggle Logic ---
+// ===============================
+// 🔁 Modal Toggle Functions
+// ===============================
 function toggleModal(show) {
   const modal = document.getElementById("auth-modal");
-  if (modal) {
-    modal.classList.toggle("hidden", !show);
-  }
+  if (modal) modal.classList.toggle("hidden", !show);
 }
 
 function showSignup() {
@@ -16,16 +16,20 @@ function showSignin() {
   document.getElementById("signin-container")?.classList.remove("hidden");
 }
 
-// --- Modal Button Triggers ---
+// ===============================
+// 🔘 Modal Link Triggers
+// ===============================
 document.querySelectorAll("a[href='/login.html'], a[href='/signup.html']").forEach(btn => {
-  btn.addEventListener("click", function (e) {
+  btn.addEventListener("click", (e) => {
     e.preventDefault();
     toggleModal(true);
     this.href.includes("signup") ? showSignup() : showSignin();
   });
 });
 
-// --- Signup Logic ---
+// ===============================
+// 📝 Signup Handler
+// ===============================
 async function handleSignup() {
   const name = document.getElementById('name')?.value.trim();
   const email = document.getElementById('signup-email')?.value.trim();
@@ -34,6 +38,8 @@ async function handleSignup() {
   const role = document.getElementById('role')?.value;
   const errorMsg = document.getElementById('signup-error-msg');
   const btn = document.getElementById('signup-btn');
+
+  errorMsg.textContent = '';
 
   if (!name || !email || !password || !confirmPassword || !role) {
     errorMsg.textContent = '⚠ All fields are required.';
@@ -47,7 +53,6 @@ async function handleSignup() {
 
   btn.disabled = true;
   btn.innerText = 'Creating...';
-  errorMsg.textContent = '';
 
   try {
     const res = await fetch('/signup', {
@@ -57,11 +62,9 @@ async function handleSignup() {
     });
 
     const text = await res.text();
-
     if (res.ok) {
       alert('✅ ' + text);
-      // Optionally redirect to login
-      // window.location.href = 'login.html';
+      // Optional: window.location.href = 'login.html';
     } else {
       errorMsg.textContent = '❌ ' + text;
     }
@@ -73,12 +76,16 @@ async function handleSignup() {
   }
 }
 
-// --- Login Logic ---
+// ===============================
+// 🔐 Login Handler
+// ===============================
 async function handleLogin() {
   const email = document.getElementById('login-email')?.value.trim();
   const password = document.getElementById('login-password')?.value.trim();
   const errorMsg = document.getElementById('login-error-msg');
   const btn = document.getElementById('login-btn');
+
+  errorMsg.textContent = '';
 
   if (!email || !password) {
     errorMsg.textContent = '⚠ Please fill in both fields.';
@@ -87,7 +94,6 @@ async function handleLogin() {
 
   btn.disabled = true;
   btn.innerText = 'Signing In...';
-  errorMsg.textContent = '';
 
   try {
     const res = await fetch('/login', {
@@ -97,10 +103,9 @@ async function handleLogin() {
     });
 
     const text = await res.text();
-
     if (res.ok) {
       alert('✅ ' + text);
-      // window.location.href = 'index.html';
+      // Optional: window.location.href = 'index.html';
     } else {
       errorMsg.textContent = '❌ ' + text;
     }
@@ -112,7 +117,9 @@ async function handleLogin() {
   }
 }
 
-// --- Language Support ---
+// ===============================
+// 🌐 Language Translation
+// ===============================
 const translations = {
   en: {
     heroTitle: "Find Help When You Need It",
@@ -158,24 +165,26 @@ const translations = {
 function applyLanguage(lang) {
   const t = translations[lang];
   if (!t) return;
-  document.getElementById('hero-title').innerText = t.heroTitle;
-  document.getElementById('hero-subtitle').innerText = t.heroSubtitle;
-  document.getElementById('available-heading').innerText = t.availableResources;
-  document.getElementById('search-input').placeholder = t.searchPlaceholder;
-  document.getElementById('btn-filter').innerText = t.filters;
-  document.getElementById('btn-clear').innerText = t.clear;
-  document.getElementById('btn-near').innerText = t.nearMe;
-  document.getElementById('more-resources-heading').innerText = t.moreResources;
-  document.getElementById('cta-title').innerText = t.readyTitle;
-  document.getElementById('cta-subtitle').innerText = t.readySubtitle;
-  document.getElementById('btn-signup-today').innerText = t.signUpToday;
+  document.getElementById('hero-title')?.innerText = t.heroTitle;
+  document.getElementById('hero-subtitle')?.innerText = t.heroSubtitle;
+  document.getElementById('available-heading')?.innerText = t.availableResources;
+  document.getElementById('search-input')?.placeholder = t.searchPlaceholder;
+  document.getElementById('btn-filter')?.innerText = t.filters;
+  document.getElementById('btn-clear')?.innerText = t.clear;
+  document.getElementById('btn-near')?.innerText = t.nearMe;
+  document.getElementById('more-resources-heading')?.innerText = t.moreResources;
+  document.getElementById('cta-title')?.innerText = t.readyTitle;
+  document.getElementById('cta-subtitle')?.innerText = t.readySubtitle;
+  document.getElementById('btn-signup-today')?.innerText = t.signUpToday;
 }
 
 document.getElementById('language-select')?.addEventListener('change', e => {
   applyLanguage(e.target.value);
 });
 
-// --- Attach Events After DOM Loads ---
+// ===============================
+// 📌 DOM Loaded Listener
+// ===============================
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('signup-btn')?.addEventListener('click', handleSignup);
   document.getElementById('login-btn')?.addEventListener('click', handleLogin);
